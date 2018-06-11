@@ -16,9 +16,26 @@ namespace WebAPI.Controllers
     {
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public string Get()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                SqlConnection sqlConnection =
+                    new SqlConnection(
+                        "Data Source=192.168.2.176;Initial Catalog=Sources;Persist Security Info=False;User Id=sa;Password=123456");
+                sqlConnection.Open();
+                string sql = "select * from source";
+                DataSet dataSet = new DataSet();
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
+                sqlDataAdapter.Fill(dataSet, "fuck");
+                DataTable dt = dataSet.Tables["fuck"];
+                string json = JsonConvert.SerializeObject(dt, Formatting.Indented);
+                return json;
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
         }
 
         // GET api/values/5
@@ -31,11 +48,11 @@ namespace WebAPI.Controllers
                     new SqlConnection(
                         "Data Source=192.168.2.176;Initial Catalog=Sources;Persist Security Info=False;User Id=sa;Password=123456");
                 sqlConnection.Open();
-                string sql = "select * from fuck";
+                string sql = "select * from users";
                 DataSet dataSet = new DataSet();
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
-                sqlDataAdapter.Fill(dataSet, "fuck");
-                DataTable dt = dataSet.Tables["fuck"];
+                sqlDataAdapter.Fill(dataSet, "users");
+                DataTable dt = dataSet.Tables["users"];
                 string json = JsonConvert.SerializeObject(dt, Formatting.Indented);
                 return json;
             }
