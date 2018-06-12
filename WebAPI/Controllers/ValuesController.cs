@@ -12,10 +12,9 @@ using WebApiParameters.Models;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[action]")]
     public class ValuesController : Controller
     {
-
    
         // GET api/values
         [HttpGet]
@@ -77,10 +76,10 @@ namespace WebAPI.Controllers
 */
         // POST api/values
         [HttpPost]
-        [ActionName("POST01")]
+        [ActionName("checkUser")]
         public string Post([FromForm] UserObject userObject)
         {
-            return SQLAssisants.Delete("users","username=1");
+            return SQLAssisants.Query("users", "username='" + userObject.username + "' And password='" + userObject.password + "' And type='" + userObject.type + "'");
         }
 
         // PUT api/values/5
