@@ -18,6 +18,7 @@ namespace WebAPI
         {
             try
             {
+                string connetionString = null;
                 connetionString = "Data Source = " + ip + "; Initial Catalog = " + catalog + "; Persist Security Info = False; User Id = sa; Password = 123456";
                 SqlConnection sqlConnection = new SqlConnection(connetionString);
                 sqlConnection.Open();
@@ -57,11 +58,11 @@ namespace WebAPI
                 connection.Open();
                 adapter.InsertCommand = new SqlCommand(sql, connection);
                 adapter.InsertCommand.ExecuteNonQuery();
-                return ("Row inserted !! ");
+                return "Row inserted !! ";
             }
             catch (Exception ex)
             {
-                return (ex.ToString());
+                return ex.ToString();
             }
         }
 
@@ -73,14 +74,14 @@ namespace WebAPI
             string sql = null;
             connetionString = "Data Source = " + ip + "; Initial Catalog = " + catalog + "; Persist Security Info = False; User Id = sa; Password = 123456";
             connection = new SqlConnection(connetionString);
-            sql = "update " + table_name + " set " + values + (condition == "" ? "" : " where ") + condition";
+            sql = "update " + table_name + " set " + values + (condition == "" ? "" : " where ") + condition;
             try
             {
                 connection.Open();
                 adapter.UpdateCommand = connection.CreateCommand();
                 adapter.UpdateCommand.CommandText = sql;
                 adapter.UpdateCommand.ExecuteNonQuery();
-                MessageBox.Show("Row updated !! ");
+                return "Row updated !! ";
             }
             catch (Exception ex)
             {
@@ -88,7 +89,7 @@ namespace WebAPI
             }
         }
 
-        public static string Delete(string ip, string catalog, string table_name)
+        public static string Delete(string ip, string catalog, string table_name, string condition)
         {
             string connetionString = null;
             SqlConnection connection;
@@ -103,11 +104,11 @@ namespace WebAPI
                 adapter.DeleteCommand = connection.CreateCommand();
                 adapter.DeleteCommand.CommandText = sql;
                 adapter.DeleteCommand.ExecuteNonQuery();
-                MessageBox.Show("Row(s) deleted !! ");
+                return "Row(s) deleted !! ";
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                return ex.ToString();
             }
         }
         /*
