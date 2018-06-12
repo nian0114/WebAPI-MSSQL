@@ -14,92 +14,24 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+
+   
         // GET api/values
         [HttpGet]
         public string Get()
         {
-            try
-            {
-                SqlConnection sqlConnection =
-                    new SqlConnection(
-                        "Data Source=192.168.2.176;Initial Catalog=Sources;Persist Security Info=False;User Id=sa;Password=123456");
-                sqlConnection.Open();
-                string sql = "select * from source";
-                DataSet dataSet = new DataSet();
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
-                sqlDataAdapter.Fill(dataSet, "fuck");
-                DataTable dt = dataSet.Tables["fuck"];
-                string json = JsonConvert.SerializeObject(dt, Formatting.Indented);
-                return json;
-            }
-            catch (Exception ex)
-            {
-                return ex.ToString();
-            }
+            return SQLAssisants.Query("192.168.50.72", "Sources", "users","");
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            try
-            {
-                SqlConnection sqlConnection =
-                    new SqlConnection(
-                        "Data Source=192.168.2.176;Initial Catalog=Sources;Persist Security Info=False;User Id=sa;Password=123456");
-                sqlConnection.Open();
-                string sql = "select * from users";
-                DataSet dataSet = new DataSet();
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
-                sqlDataAdapter.Fill(dataSet, "users");
-                DataTable dt = dataSet.Tables["users"];
-                string json = JsonConvert.SerializeObject(dt, Formatting.Indented);
-                return json;
-            }
-            catch (Exception ex)
-            {
-                return ex.ToString();
-            }
+            return SQLAssisants.Query("192.168.50.72", "Sources", "users","username='0000001'");
         }
+
+
         /*
-
-        private static void PrepareCommand(SqlCommand cmd, SqlConnection conn, CommandType cmdType, string cmdText, SqlParameter[] cmdParms)
-        {
-
-            if (conn.State != ConnectionState.Open)
-                conn.Open();
-
-            cmd.Connection = conn;
-            cmd.CommandText = cmdText;
-
-            cmd.CommandType = cmdType;
-
-            if (cmdParms != null)
-            {
-                foreach (SqlParameter parm in cmdParms)
-                    cmd.Parameters.Add(parm);
-            }
-        }
-
-        public static SqlDataReader ExecuteReader(CommandType cmdType, string cmdText, params SqlParameter[] commandParameters)
-        {
-            SqlCommand cmd = new SqlCommand();
-            SqlConnection conn = new SqlConnection("Data Source=192.168.2.176;Initial Catalog=Sources;Persist Security Info=False;User Id=sa;Password=123456");
-            try
-            {
-                PrepareCommand(cmd, conn, cmdType, cmdText, commandParameters);
-                SqlDataReader rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-                cmd.Parameters.Clear();
-                return rdr;
-            }
-            catch
-            {
-                conn.Close();
-                throw;
-            }
-
-        }
-
         // GET api/values/5
         [HttpGet("{id}")]
         public string Get(int id){
