@@ -7,17 +7,19 @@ using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
 using Newtonsoft.Json;
+using WebApiParameters.Models;
 
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public class ValuesController : Controller
     {
 
    
         // GET api/values
         [HttpGet]
+        [ActionName("Get01")]
         public string Get()
         {
             return SQLAssisants.Query("192.168.50.72", "Sources", "users","");
@@ -25,6 +27,7 @@ namespace WebAPI.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
+        [ActionName("Get01")]
         public string Get(int id)
         {
             return SQLAssisants.Query("192.168.50.72", "Sources", "users","username='0000001'");
@@ -74,8 +77,10 @@ namespace WebAPI.Controllers
 */
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        [ActionName("POST01")]
+        public string Post([FromForm] UserObject userObject)
         {
+            return "value:" + userObject.Id1;
         }
 
         // PUT api/values/5
