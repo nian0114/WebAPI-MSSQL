@@ -18,9 +18,8 @@ namespace WebAPI
         {
             try
             {
-                SqlConnection sqlConnection =
-                    new SqlConnection(
-                        "Data Source=" + ip + ";Initial Catalog=" + catalog + ";Persist Security Info=False;User Id=sa;Password=123456");
+                connetionString = "Data Source = " + ip + "; Initial Catalog = " + catalog + "; Persist Security Info = False; User Id = sa; Password = 123456";
+                SqlConnection sqlConnection = new SqlConnection(connetionString);
                 sqlConnection.Open();
                 /*
                  * if(condition==""){
@@ -44,6 +43,73 @@ namespace WebAPI
             }
         }
 
+        public static string Insert(string ip, string catalog, string table_name, string values)
+        {
+            string connetionString = null;
+            SqlConnection connection;
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            string sql = null;
+            connetionString = "Data Source = " + ip + "; Initial Catalog = " + catalog + "; Persist Security Info = False; User Id = sa; Password = 123456";
+            connection = new SqlConnection(connetionString);
+            sql = "insert into " + table_name + " values(" + values + ")";
+            try
+            {
+                connection.Open();
+                adapter.InsertCommand = new SqlCommand(sql, connection);
+                adapter.InsertCommand.ExecuteNonQuery();
+                return ("Row inserted !! ");
+            }
+            catch (Exception ex)
+            {
+                return (ex.ToString());
+            }
+        }
+
+        public static string Update(string ip, string catalog, string table_name, string values, string condition)
+        {
+            string connetionString = null;
+            SqlConnection connection;
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            string sql = null;
+            connetionString = "Data Source = " + ip + "; Initial Catalog = " + catalog + "; Persist Security Info = False; User Id = sa; Password = 123456";
+            connection = new SqlConnection(connetionString);
+            sql = "update " + table_name + " set " + values + (condition == "" ? "" : " where ") + condition";
+            try
+            {
+                connection.Open();
+                adapter.UpdateCommand = connection.CreateCommand();
+                adapter.UpdateCommand.CommandText = sql;
+                adapter.UpdateCommand.ExecuteNonQuery();
+                MessageBox.Show("Row updated !! ");
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
+        }
+
+        public static string Delete(string ip, string catalog, string table_name)
+        {
+            string connetionString = null;
+            SqlConnection connection;
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            string sql = null;
+            connetionString = "Data Source = " + ip + "; Initial Catalog = " + catalog + "; Persist Security Info = False; User Id = sa; Password = 123456";
+            connection = new SqlConnection(connetionString);
+            sql = "delete " + table_name + (condition == "" ? "" : " where ") + condition;
+            try
+            {
+                connection.Open();
+                adapter.DeleteCommand = connection.CreateCommand();
+                adapter.DeleteCommand.CommandText = sql;
+                adapter.DeleteCommand.ExecuteNonQuery();
+                MessageBox.Show("Row(s) deleted !! ");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
         /*
          *private static void PrepareCommand(SqlCommand cmd, SqlConnection conn, CommandType cmdType, string cmdText, SqlParameter[] cmdParms)
         {

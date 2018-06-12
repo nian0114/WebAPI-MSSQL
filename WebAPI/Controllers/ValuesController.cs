@@ -80,7 +80,7 @@ namespace WebAPI.Controllers
         [ActionName("POST01")]
         public string Post([FromForm] UserObject userObject)
         {
-            return "value:" + userObject.Id1;
+            return SQLAssisants.Insert("192.168.50.72", "Sources", "users","1,2,3,4");
         }
 
         // PUT api/values/5
