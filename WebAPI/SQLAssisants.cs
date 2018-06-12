@@ -14,13 +14,18 @@ namespace WebAPI
 {
     public class SQLAssisants
     {
-        public static string Query(string ip, string catalog, string table_name, string condition)
+        public static readonly string ip = "192.168.50.72";
+        public static readonly string catalog = "Sources";
+        public static readonly string username = "sa";
+        public static readonly string password = "123456";
+
+        public static readonly string ConnectionString = "Data Source = " + ip + "; Initial Catalog = " + catalog + "; Persist Security Info = False; User Id = " + username + "; Password = " + password;
+
+        public static string Query(string table_name, string condition)
         {
             try
             {
-                string connetionString = null;
-                connetionString = "Data Source = " + ip + "; Initial Catalog = " + catalog + "; Persist Security Info = False; User Id = sa; Password = 123456";
-                SqlConnection sqlConnection = new SqlConnection(connetionString);
+                SqlConnection sqlConnection = new SqlConnection(ConnectionString);
                 sqlConnection.Open();
                 /*
                  * if(condition==""){
@@ -44,14 +49,12 @@ namespace WebAPI
             }
         }
 
-        public static string Insert(string ip, string catalog, string table_name, string values)
+        public static string Insert(string table_name, string values)
         {
-            string connetionString = null;
             SqlConnection connection;
             SqlDataAdapter adapter = new SqlDataAdapter();
             string sql = null;
-            connetionString = "Data Source = " + ip + "; Initial Catalog = " + catalog + "; Persist Security Info = False; User Id = sa; Password = 123456";
-            connection = new SqlConnection(connetionString);
+            connection = new SqlConnection(ConnectionString);
             sql = "insert into " + table_name + " values(" + values + ")";
             try
             {
@@ -66,14 +69,12 @@ namespace WebAPI
             }
         }
 
-        public static string Update(string ip, string catalog, string table_name, string values, string condition)
+        public static string Update(string table_name, string values, string condition)
         {
-            string connetionString = null;
             SqlConnection connection;
             SqlDataAdapter adapter = new SqlDataAdapter();
             string sql = null;
-            connetionString = "Data Source = " + ip + "; Initial Catalog = " + catalog + "; Persist Security Info = False; User Id = sa; Password = 123456";
-            connection = new SqlConnection(connetionString);
+            connection = new SqlConnection(ConnectionString);
             sql = "update " + table_name + " set " + values + (condition == "" ? "" : " where ") + condition;
             try
             {
@@ -89,14 +90,12 @@ namespace WebAPI
             }
         }
 
-        public static string Delete(string ip, string catalog, string table_name, string condition)
+        public static string Delete(string table_name, string condition)
         {
-            string connetionString = null;
             SqlConnection connection;
             SqlDataAdapter adapter = new SqlDataAdapter();
             string sql = null;
-            connetionString = "Data Source = " + ip + "; Initial Catalog = " + catalog + "; Persist Security Info = False; User Id = sa; Password = 123456";
-            connection = new SqlConnection(connetionString);
+            connection = new SqlConnection(ConnectionString);
             sql = "delete " + table_name + (condition == "" ? "" : " where ") + condition;
             try
             {

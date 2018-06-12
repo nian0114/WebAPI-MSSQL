@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
         [ActionName("Get01")]
         public string Get()
         {
-            return SQLAssisants.Query("192.168.50.72", "Sources", "users","");
+            return SQLAssisants.Query("users","");
         }
 
         // GET api/values/5
@@ -30,7 +30,7 @@ namespace WebAPI.Controllers
         [ActionName("Get01")]
         public string Get(int id)
         {
-            return SQLAssisants.Query("192.168.50.72", "Sources", "users","username='0000001'");
+            return SQLAssisants.Query("users","username='0000001'");
         }
 
 
@@ -80,7 +80,7 @@ namespace WebAPI.Controllers
         [ActionName("POST01")]
         public string Post([FromForm] UserObject userObject)
         {
-            return SQLAssisants.Delete("192.168.50.72", "Sources", "users","username=1");
+            return SQLAssisants.Delete("users","username=1");
         }
 
         // PUT api/values/5
