@@ -49,6 +49,26 @@ namespace WebAPI
             }
         }
 
+        public static string Query_manual(string table_name, string sql)
+        {
+            try
+            {
+                SqlConnection sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+                DataSet dataSet = new DataSet();
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, sqlConnection);
+                sqlDataAdapter.Fill(dataSet, table_name);
+                DataTable dt = dataSet.Tables[table_name];
+                string json = JsonConvert.SerializeObject(dt, Formatting.Indented);
+                return json;
+
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
+        }
+
         public static string Insert(string table_name, string values)
         {
             SqlConnection connection;

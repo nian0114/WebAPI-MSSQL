@@ -82,6 +82,14 @@ namespace WebAPI.Controllers
             return SQLAssisants.Query("users", "username='" + userObject.username + "' And password='" + userObject.password + "' And type='" + userObject.type + "'");
         }
 
+        // POST api/values
+        [HttpPost]
+        [ActionName("getSource")]
+        public string PostSource([FromForm] SourceObject sourceObject)
+        {
+            return SQLAssisants.Query_manual("score","SELECT *,(SELECT count(DISTINCT score) FROM score AS b WHERE course_id='" + sourceObject.course + "' AND a.score<b.score)+1 AS rank FROM score AS a WHERE course_id='" + sourceObject.course + "' AND no='" + sourceObject.username + "'");
+        }
+
         // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
