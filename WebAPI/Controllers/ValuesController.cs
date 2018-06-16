@@ -84,10 +84,18 @@ namespace WebAPI.Controllers
 
         // POST api/values
         [HttpPost]
+        [ActionName("getUserClass")]
+        public string Post(String username)
+        {
+            return SQLAssisants.Query_manual("score", "SELECT course_id FROM score WHERE no='" + username +"'");
+        }
+
+        // POST api/values
+        [HttpPost]
         [ActionName("getSource")]
         public string PostSource([FromForm] SourceObject sourceObject)
         {
-            return SQLAssisants.Query_manual("score","SELECT *,(SELECT count(DISTINCT score) FROM score AS b WHERE course_id='" + sourceObject.course + "' AND a.score<b.score)+1 AS rank FROM score AS a WHERE course_id='" + sourceObject.course + "' AND no='" + sourceObject.username + "'");
+            return SQLAssisants.Query_manual("score","SELECT no,score,(SELECT count(DISTINCT score) FROM score AS b WHERE course_id='" + sourceObject.course + "' AND a.score<b.score)+1 AS rank,(SELECT course_name FROM course WHERE course_id='" + sourceObject.course + "') AS course_name FROM score AS a WHERE course_id='" + sourceObject.course + "' AND no='" + sourceObject.username + "'");
         }
 
         // PUT api/values/5
