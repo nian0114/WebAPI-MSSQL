@@ -14,7 +14,7 @@ namespace WebAPI
 {
     public class SQLAssisants
     {
-        public static readonly string ip = "192.168.2.176";
+        public static readonly string ip = "192.168.43.208";
         public static readonly string catalog = "Sources";
         public static readonly string username = "sa";
         public static readonly string password = "123456";
