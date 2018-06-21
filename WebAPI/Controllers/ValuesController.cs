@@ -110,7 +110,23 @@ namespace WebAPI.Controllers
         [ActionName("getSourceByCourse")]
         public string PostSourceByCourse(string course_id)
         {
-            return SQLAssisants.Query_manual("score", "SELECT no,score,(SELECT count(DISTINCT score) FROM score AS b WHERE course_id='" + course_id + "' AND a.score<b.score)+1 AS rank,(SELECT course_name FROM course WHERE course_id='" + course_id + "') AS course_name FROM score AS a WHERE course_id='" + course_id + "'");
+            return SQLAssisants.Query_manual("score", "SELECT users.username,users.class_id,users.name,score,(SELECT count(DISTINCT score) FROM score AS b WHERE course_id='" + course_id + "' AND a.score<b.score)+1 AS rank,(SELECT course_name FROM course WHERE course_id='" + course_id + "') AS course_name FROM score AS a INNER JOIN users ON (users.username = no) WHERE course_id='" + course_id + "'");
+        }
+
+        // POST api/values
+        [HttpPost]
+        [ActionName("getSourceByClassID")]
+        public string PostSourceByClassID(string class_id)
+        {
+            return SQLAssisants.Query_manual("score", "SELECT rank() over (order by score desc) rank,name,score,(SELECT course_name from course where course_id='100000') course_name from score INNER JOIN users ON (users.username = no) where course_id='100000' AND class_id='" + class_id + "'");
+        }
+
+        // POST api/values
+        [HttpPost]
+        [ActionName("getSourceAVG")]
+        public string PostSourceAVG(string class_id)
+        {
+            return SQLAssisants.Query_manual("score", "SELECT AVG(score) score,(SELECT course_name from course where course_id='100000') course_name FROM score INNER JOIN users ON (users.username = no) where course_id='100000' AND class_id='" + class_id + "'");
         }
 
         // PUT api/values/5
