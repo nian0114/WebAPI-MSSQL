@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <ApplicationURL>http://192.168.43.244:4617/</ApplicationURL>
+    <ApplicationURL>http://192.168.2.206:4617/</ApplicationURL>
 
   </PropertyGroup>
 
