@@ -129,6 +129,30 @@ namespace WebAPI.Controllers
             return SQLAssisants.Query_manual("score", "SELECT AVG(score) score,(SELECT course_name from course where course_id='100000') course_name FROM score INNER JOIN users ON (users.username = no) where course_id='100000' AND class_id='" + class_id + "'");
         }
 
+        // POST api/values
+        [HttpPost]
+        [ActionName("insertScore")]
+        public string InsertSource([FromForm] SourceObject sourceObject)
+        {
+            return SQLAssisants.Insert("score",sourceObject.username+","+sourceObject.score + ","+sourceObject.course);
+        }
+
+        // POST api/values
+        [HttpPost]
+        [ActionName("updateScore")]
+        public string UpdateSource([FromForm] SourceObject sourceObject)
+        {
+            return SQLAssisants.Update("score", "score=" + sourceObject.score,"no="+sourceObject.username+"AND course_id="+sourceObject.course);
+        }
+
+        // POST api/values
+        [HttpPost]
+        [ActionName("deleteScore")]
+        public string DeleteSource([FromForm] SourceObject sourceObject)
+        {
+            return SQLAssisants.Delete("score", "no=" + sourceObject.username + "AND course_id=" + sourceObject.course);
+        }
+
         // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)

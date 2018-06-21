@@ -23,5 +23,6 @@
 
   <ItemGroup>
     <Compile Remove="SQLHelper.cs" />
+    <Compile Remove="Models\SourceObject %28副本%29.cs" />
   </ItemGroup>
 </Project>

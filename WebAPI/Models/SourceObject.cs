@@ -5,5 +5,6 @@ namespace WebApiParameters.Models
     {
         public string username { get; set; }
         public string course { get; set; }
+        public string score { get; set; }
     }
 }
