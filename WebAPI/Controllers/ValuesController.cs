@@ -26,12 +26,19 @@ namespace WebAPI.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        [ActionName("Get01")]
+        [ActionName("getName")]
         public string Get(int id)
         {
-            return SQLAssisants.Query("users","username='0000001'");
+            return SQLAssisants.Query_manual("users","SELECT name FROM users WHERE username='"+id+"'");
         }
 
+        // GET api/values/5
+        [HttpGet("{name}")]
+        [ActionName("getNo")]
+        public string GetNo(string name)
+        {
+            return SQLAssisants.Query_manual("users", "SELECT username FROM users WHERE name='" + name + "'");
+        }
 
         /*
         // GET api/values/5
@@ -96,6 +103,14 @@ namespace WebAPI.Controllers
         public string PostSource([FromForm] SourceObject sourceObject)
         {
             return SQLAssisants.Query_manual("score","SELECT no,score,(SELECT count(DISTINCT score) FROM score AS b WHERE course_id='" + sourceObject.course + "' AND a.score<b.score)+1 AS rank,(SELECT course_name FROM course WHERE course_id='" + sourceObject.course + "') AS course_name FROM score AS a WHERE course_id='" + sourceObject.course + "' AND no='" + sourceObject.username + "'");
+        }
+
+        // POST api/values
+        [HttpPost]
+        [ActionName("getSourceByCourse")]
+        public string PostSourceByCourse(string course_id)
+        {
+            return SQLAssisants.Query_manual("score", "SELECT no,score,(SELECT count(DISTINCT score) FROM score AS b WHERE course_id='" + course_id + "' AND a.score<b.score)+1 AS rank,(SELECT course_name FROM course WHERE course_id='" + course_id + "') AS course_name FROM score AS a WHERE course_id='" + course_id + "'");
         }
 
         // PUT api/values/5
