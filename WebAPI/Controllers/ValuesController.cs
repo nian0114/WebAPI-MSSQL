@@ -153,6 +153,31 @@ namespace WebAPI.Controllers
             return SQLAssisants.Delete("score", "no=" + sourceObject.username + "AND course_id=" + sourceObject.course);
         }
 
+        // POST api/values
+        [HttpPost]
+        [ActionName("insertStu")]
+        public string InsertSource([FromForm] UserObject userObject)
+        {
+            return SQLAssisants.Insert("users", userObject.username + "," + userObject.password + ",1," + userObject.classid+","+userObject.name);
+        }
+
+        // POST api/values
+        [HttpPost]
+        [ActionName("updateStu")]
+        public string UpdateSource([FromForm] UserObject userObject)
+        {
+            return SQLAssisants.Update("users", "password='" + userObject.password + "' , class_id='" + userObject.classid+"' , name='"+userObject.name+"'", "username='" + userObject.username+"'");
+        }
+
+        // POST api/values
+        [HttpPost]
+        [ActionName("deleteStu")]
+        public string DeleteSource([FromForm] UserObject userObject)
+        {
+            return SQLAssisants.Delete("users", "username=" + userObject.username);
+        }
+
+
         // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
