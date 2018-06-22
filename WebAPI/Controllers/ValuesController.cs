@@ -116,17 +116,17 @@ namespace WebAPI.Controllers
         // POST api/values
         [HttpPost]
         [ActionName("getSourceByClassID")]
-        public string PostSourceByClassID(string class_id)
+        public string PostSourceByClassID(CourseObject courseObject)
         {
-            return SQLAssisants.Query_manual("score", "SELECT rank() over (order by score desc) rank,name,score,(SELECT course_name from course where course_id='100000') course_name from score INNER JOIN users ON (users.username = no) where course_id='100000' AND class_id='" + class_id + "'");
+            return SQLAssisants.Query_manual("score", "SELECT rank() over (order by score desc) rank,name,score,(SELECT course_name from course where course_id='"+courseObject.course_id+"') course_name from score INNER JOIN users ON (users.username = no) where course_id='" + courseObject.course_id + "' AND class_id='" + courseObject.class_id + "'");
         }
 
         // POST api/values
         [HttpPost]
         [ActionName("getSourceAVG")]
-        public string PostSourceAVG(string class_id)
+        public string PostSourceAVG(CourseObject courseObject)
         {
-            return SQLAssisants.Query_manual("score", "SELECT AVG(score) score,(SELECT course_name from course where course_id='100000') course_name FROM score INNER JOIN users ON (users.username = no) where course_id='100000' AND class_id='" + class_id + "'");
+            return SQLAssisants.Query_manual("score", "SELECT AVG(score) score,(SELECT course_name from course where course_id='" + courseObject.course_id + "') course_name FROM score INNER JOIN users ON (users.username = no) where course_id='" + courseObject.course_id + "' AND class_id='" + courseObject.class_id + "'");
         }
 
         // POST api/values
